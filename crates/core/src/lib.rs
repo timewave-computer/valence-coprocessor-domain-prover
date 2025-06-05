@@ -17,16 +17,6 @@ impl Proof {
     pub const DOMAIN_CIRCUIT: &str =
         "520d2b2cc9a7e4005c10ae62e14745a737459e1e39f387e23a6607d567b2b87d";
 
-    /// The deployed domain prover verifying key.
-    pub const DOMAIN_VK: &[u8] = include_bytes!(
-        "../../../assets/520d2b2cc9a7e4005c10ae62e14745a737459e1e39f387e23a6607d567b2b87d/vk.bin",
-    );
-
-    /// The deployed domain prover elf bytecode.
-    pub const DOMAIN_ELF: &[u8] = include_bytes!(
-        "../../../assets/520d2b2cc9a7e4005c10ae62e14745a737459e1e39f387e23a6607d567b2b87d/elf.bin",
-    );
-
     pub async fn prove<C: AsRef<str>>(
         client: &Client,
         circuit: C,
