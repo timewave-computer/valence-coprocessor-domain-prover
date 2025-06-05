@@ -1,0 +1,17 @@
+[package]
+name = "valence-coprocessor-domain-prover"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+description = "The Valence co-processor circuit definition."
+
+[dependencies]
+anyhow.workspace = true
+hex.workspace = true
+msgpacker.workspace = true
+serde_json.workspace = true
+valence-coprocessor.workspace = true
+valence-coprocessor-client.workspace = true
+
+[dev-dependencies]
+tokio = { version = "1.44.2", features = ["full"] }
