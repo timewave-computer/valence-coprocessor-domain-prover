@@ -1457,7 +1457,7 @@ dependencies = [
 
 [[package]]
 name = "valence-coprocessor-domain-prover"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "anyhow",
  "hex",
@@ -1470,14 +1470,14 @@ dependencies = [
 
 [[package]]
 name = "valence-coprocessor-domain-prover-circuit"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "valence-coprocessor",
 ]
 
 [[package]]
 name = "valence-coprocessor-domain-prover-controller"
-version = "0.2.0"
+version = "0.3.0"
 dependencies = [
  "anyhow",
  "serde_json",

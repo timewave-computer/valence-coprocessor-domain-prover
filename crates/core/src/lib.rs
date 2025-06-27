@@ -15,7 +15,7 @@ pub struct Proof {
 impl Proof {
     /// The deployed domain prover circuit id.
     pub const DOMAIN_CIRCUIT: &str =
-        "520d2b2cc9a7e4005c10ae62e14745a737459e1e39f387e23a6607d567b2b87d";
+        "0403dde342fbb270fcbdd0c78ff77f3026c0277318d3e476cf7e524699c9457d";
 
     pub async fn prove<C: AsRef<str>>(
         client: &Client,
