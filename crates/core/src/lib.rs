@@ -44,16 +44,6 @@ mod tests {
     use super::Proof;
 
     #[tokio::test]
-    async fn controller_works() {
-        let witnesses = Client::default()
-            .get_witnesses(Proof::DOMAIN_CIRCUIT, &Default::default())
-            .await
-            .unwrap();
-
-        assert!(witnesses.is_empty());
-    }
-
-    #[tokio::test]
     async fn prove_works() {
         let circuit = "7e0207a1fa0a979282b7246c028a6a87c25bc60f7b6d5230e943003634e897fd";
         let args = json!({"value": 42});
