@@ -1,5 +1,12 @@
 [workspace]
-members = ["crates/builder", "crates/circuit", "crates/controller", "crates/core", "crates/service", "crates/wrapper"]
+members = [
+  "crates/builder",
+  "crates/circuit",
+  "crates/controller",
+  "crates/core",
+  "crates/service",
+  "crates/wrapper",
+]
 resolver = "2"
 default-members = ["crates/core", "crates/service"]
 
@@ -12,7 +19,9 @@ version = "0.4.0"
 [workspace.dependencies]
 anyhow = { version = "1.0.83", default-features = false }
 clap = { version = "4.5.37", features = ["derive"] }
-const-hex = { version = "1.14.1", default-features = false, features = ["alloc"] }
+const-hex = { version = "1.14.1", default-features = false, features = [
+  "alloc",
+] }
 hex = "0.4.3"
 msgpacker = "0.4.8"
 poem = { version = "3.1.9", features = ["anyhow"] }
@@ -37,11 +46,11 @@ tracing-subscriber = { version = "0.3.19", default-features = true, features = [
 ] }
 zerocopy = { version = "0.8.23", features = ["alloc", "derive"] }
 
-valence-coprocessor = { path = "/home/vlopes/dev/timewave/valence-coprocessor/crates/core", default-features = false }
-valence-coprocessor-client = { path = "/home/vlopes/dev/timewave/valence-coprocessor/crates/utils/client" }
-valence-coprocessor-prover = { path = "/home/vlopes/dev/timewave/valence-coprocessor/crates/endpoint/prover", default-features = false }
-valence-coprocessor-sp1 = { path = "/home/vlopes/dev/timewave/valence-coprocessor/crates/runtime/sp1", default-features = false }
-valence-coprocessor-wasm = { path = "/home/vlopes/dev/timewave/valence-coprocessor/crates/runtime/wasm", default-features = false }
+valence-coprocessor = { git = "https://github.com/timewave-computer/valence-coprocessor.git", tag = "v0.4.4", default-features = false }
+valence-coprocessor-client = { git = "https://github.com/timewave-computer/valence-coprocessor.git", tag = "v0.4.4" }
+valence-coprocessor-prover = { git = "https://github.com/timewave-computer/valence-coprocessor.git", tag = "v0.4.4", default-features = false }
+valence-coprocessor-sp1 = { git = "https://github.com/timewave-computer/valence-coprocessor.git", tag = "v0.4.4", default-features = false }
+valence-coprocessor-wasm = { git = "https://github.com/timewave-computer/valence-coprocessor.git", tag = "v0.4.4", default-features = false }
 
 [profile.test]
 # groth16 verifier is expensive
