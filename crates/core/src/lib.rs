@@ -1,58 +1,68 @@
-use msgpacker::MsgPacker;
+#![no_std]
 
-use serde_json::Value;
-pub use valence_coprocessor;
-pub use valence_coprocessor_client;
-use valence_coprocessor_client::Client;
+extern crate alloc;
 
-#[derive(Debug, Clone, PartialEq, Eq, PartialOrd, Ord, MsgPacker)]
-pub struct Proof {
-    pub program: valence_coprocessor::Proof,
-    pub domain: valence_coprocessor::Proof,
-}
+use alloc::vec::Vec;
+use msgpacker::{Packable as _, Unpackable as _};
+use sp1_verifier::{Groth16Verifier, GROTH16_VK_BYTES};
+use valence_coprocessor::{Hash, Hasher, HistoricalTransitionProof, Proof, ValidatedBlock};
 
-// pub async fn prove<C: AsRef<str>>(&self, circuit: C, args: &Value) -> anyhow::Result<Proof> {
-impl Proof {
-    /// The deployed domain prover circuit id.
-    pub const DOMAIN_CIRCUIT: &str =
-        "0403dde342fbb270fcbdd0c78ff77f3026c0277318d3e476cf7e524699c9457d";
+mod state;
+mod types;
 
-    pub async fn prove<C: AsRef<str>>(
-        client: &Client,
-        circuit: C,
-        args: &Value,
-    ) -> anyhow::Result<Self> {
-        let circuit = circuit.as_ref();
-        let program = client.prove(circuit, args).await?;
+pub use state::*;
+pub use types::*;
 
-        let root = program.decode()?.1;
-        let root = hex::encode(&root[..32]);
+impl Circuit {
+    pub fn root<H: Hasher>(&self, updates: Vec<HistoricalTransitionProof>) -> anyhow::Result<Hash> {
+        let mut root = updates
+            .first()
+            .map(|u| u.update.previous)
+            .unwrap_or_default();
 
-        let domain = client
-            .prove_with_root(Self::DOMAIN_CIRCUIT, root, &Default::default())
-            .await?;
+        for proof in updates {
+            let update = proof.verify::<H>()?;
 
-        Ok(Self { program, domain })
+            anyhow::ensure!(root == update.previous, "unexpected root");
+
+            root = update.root;
+
+            let id = self
+                .domains
+                .iter()
+                .enumerate()
+                .find_map(|(i, d)| (d.id == update.block.domain).then_some(i));
+
+            // won't verify lightclient proof if domain not elected
+            let id = match id {
+                Some(id) => id,
+                None => continue,
+            };
+
+            let pi = ValidatedBlock {
+                number: update.block.number,
+                root: update.block.root,
+                payload: Vec::new(),
+            }
+            .pack_to_vec();
+
+            let proof = Proof::unpack(&update.block.payload)?.1;
+            let proof = proof.decode()?.0;
+
+            Groth16Verifier::verify(&proof, &pi, &self.domains[id].vk, &GROTH16_VK_BYTES)?;
+        }
+
+        Ok(root)
     }
 }
 
-#[cfg(test)]
-mod tests {
-    use serde_json::json;
-    use valence_coprocessor_client::Client;
+#[test]
+fn circuit_root_works() {
+    use valence_coprocessor_sp1::Sp1Hasher;
 
-    use super::Proof;
+    let input = include_bytes!("../../../assets/input.json");
+    let CircuitInput { updates, .. } = serde_json::from_slice(input).unwrap();
+    let circuit = Circuit::default();
 
-    #[tokio::test]
-    async fn prove_works() {
-        let circuit = "7e0207a1fa0a979282b7246c028a6a87c25bc60f7b6d5230e943003634e897fd";
-        let args = json!({"value": 42});
-        let client = Client::default();
-
-        let proof = Proof::prove(&client, circuit, &args).await.unwrap();
-        let program = proof.program.decode().unwrap().1;
-        let domain = proof.domain.decode().unwrap().1;
-
-        assert_eq!(&program[..32], &domain[..32]);
-    }
+    circuit.root::<Sp1Hasher>(updates).unwrap();
 }

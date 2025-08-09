@@ -1,9 +1,12 @@
 [package]
 name = "valence-coprocessor-domain-prover-circuit"
-version.workspace = true
-edition.workspace = true
-authors.workspace = true
-description = "The Valence co-processor circuit definition."
+edition = "2021"
+version = "0.1.0"
 
 [dependencies]
+msgpacker.workspace = true
+sp1-zkvm.workspace = true
 valence-coprocessor.workspace = true
+valence-coprocessor-domain-prover.path = "../core"
+valence-coprocessor-sp1.workspace = true
+zerocopy.workspace = true

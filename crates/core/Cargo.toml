@@ -7,11 +7,12 @@ description = "The Valence co-processor circuit definition."
 
 [dependencies]
 anyhow.workspace = true
-hex.workspace = true
+const-hex.workspace = true
 msgpacker.workspace = true
+serde.workspace = true
 serde_json.workspace = true
+sp1-verifier.workspace = true
 valence-coprocessor.workspace = true
-valence-coprocessor-client.workspace = true
 
 [dev-dependencies]
-tokio = { version = "1.44.2", features = ["full"] }
+valence-coprocessor-sp1.workspace = true

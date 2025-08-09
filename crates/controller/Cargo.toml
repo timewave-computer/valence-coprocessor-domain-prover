@@ -3,10 +3,14 @@ name = "valence-coprocessor-domain-prover-controller"
 version.workspace = true
 edition.workspace = true
 authors.workspace = true
-description = "The Valence co-processor controller definition."
+description = "The Valence co-processor circuit definition."
 
 [dependencies]
-anyhow.workspace = true
 serde_json.workspace = true
-valence-coprocessor.workspace = true
 valence-coprocessor-wasm.workspace = true
+
+[lib]
+crate-type = ["cdylib"]
+
+[features]
+wasm = ["valence-coprocessor-wasm/abi-handlers"]

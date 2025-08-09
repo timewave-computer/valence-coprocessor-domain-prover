@@ -1,20 +1,48 @@
 [workspace]
-members = ["crates/circuit", "crates/core", "crates/controller"]
+members = ["crates/builder", "crates/circuit", "crates/controller", "crates/core", "crates/service", "crates/wrapper"]
 resolver = "2"
+default-members = ["crates/core", "crates/service"]
 
 [workspace.package]
 authors = ["Timewave Labs"]
 edition = "2021"
 license = "Apache-2.0"
-version = "0.3.7"
+version = "0.4.0"
 
 [workspace.dependencies]
 anyhow = { version = "1.0.83", default-features = false }
+clap = { version = "4.5.37", features = ["derive"] }
+const-hex = { version = "1.14.1", default-features = false, features = ["alloc"] }
 hex = "0.4.3"
 msgpacker = "0.4.8"
+poem = { version = "3.1.9", features = ["anyhow"] }
+poem-openapi = { version = "5.1.13", features = ["swagger-ui"] }
+reqwest = { version = "0.12.15", features = ["json"] }
+serde = { version = "1.0.219", default-features = false, features = [
+  "alloc",
+  "derive",
+] }
+serde_cbor = "0.11.2"
 serde_json = { version = "1.0.140", default-features = false, features = [
   "alloc",
 ] }
-valence-coprocessor = { git = "https://github.com/timewave-computer/valence-coprocessor.git", tag = "v0.3.7", default-features = false }
-valence-coprocessor-client = { git = "https://github.com/timewave-computer/valence-coprocessor.git", tag = "v0.3.7" }
-valence-coprocessor-wasm = { git = "https://github.com/timewave-computer/valence-coprocessor.git", tag = "v0.3.7", default-features = false }
+sp1-build = "=5.0.8"
+sp1-sdk = "=5.0.8"
+sp1-verifier = { version = "=5.0.8", default-features = false }
+sp1-zkvm = { version = "=5.0.8", features = ["verify"] }
+tokio = { version = "1.44.2", features = ["full"] }
+tracing = { version = "0.1.41", default-features = false }
+tracing-subscriber = { version = "0.3.19", default-features = true, features = [
+  "env-filter",
+] }
+zerocopy = { version = "0.8.23", features = ["alloc", "derive"] }
+
+valence-coprocessor = { path = "/home/vlopes/dev/timewave/valence-coprocessor/crates/core", default-features = false }
+valence-coprocessor-client = { path = "/home/vlopes/dev/timewave/valence-coprocessor/crates/utils/client" }
+valence-coprocessor-prover = { path = "/home/vlopes/dev/timewave/valence-coprocessor/crates/endpoint/prover", default-features = false }
+valence-coprocessor-sp1 = { path = "/home/vlopes/dev/timewave/valence-coprocessor/crates/runtime/sp1", default-features = false }
+valence-coprocessor-wasm = { path = "/home/vlopes/dev/timewave/valence-coprocessor/crates/runtime/wasm", default-features = false }
+
+[profile.test]
+# groth16 verifier is expensive
+inherits = "release"

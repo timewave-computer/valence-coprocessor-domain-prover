@@ -1,0 +1,14 @@
+[package]
+version = "0.1.0"
+name = "valence-coprocessor-domain-prover-wrapper"
+edition = "2021"
+
+[dependencies]
+msgpacker.workspace = true
+sp1-zkvm.workspace = true
+valence-coprocessor.workspace = true
+zerocopy.workspace = true
+
+sha2-v0-10-8 = { git = "https://github.com/sp1-patches/RustCrypto-hashes", package = "sha2", tag = "patch-sha2-0.10.8-sp1-4.0.0", default-features = false, features = [
+  "oid",
+] }
