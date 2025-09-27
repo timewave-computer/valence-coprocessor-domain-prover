@@ -13669,10 +13669,10 @@ Elliptic-Curve-Point-to-Octet-String encoding
       };
       "serde" = rec {
         crateName = "serde";
-        version = "1.0.227";
+        version = "1.0.228";
         edition = "2021";
         description = "A generic serialization/deserialization framework";
-        sha256 = "0ia2p85z8ypyjvl7x6a0pxy5fgjd6c3hrd9a76slxvgvqqzy9v40";
+        sha256 = "17mf4hhjxv5m90g42wmlbc61hdhlm6j9hwfkpcnd72rpgzm993ls";
         authors = [
           "Erick Tryzelaar <erick.tryzelaar@gmail.com>"
           "David Tolnay <dtolnay@gmail.com>"
@@ -13731,10 +13731,10 @@ Elliptic-Curve-Point-to-Octet-String encoding
       };
       "serde_core" = rec {
         crateName = "serde_core";
-        version = "1.0.227";
+        version = "1.0.228";
         edition = "2021";
         description = "Serde traits only, with no support for derive -- use the `serde` crate instead";
-        sha256 = "1r9vnglazz5vfpi32by80c1nig1jvy9h2hcyl9pci8h7nrsn4mvs";
+        sha256 = "1bb7id2xwx8izq50098s5j2sqrrvk31jbbrjqygyan6ask3qbls1";
         authors = [
           "Erick Tryzelaar <erick.tryzelaar@gmail.com>"
           "David Tolnay <dtolnay@gmail.com>"
@@ -13759,10 +13759,10 @@ Elliptic-Curve-Point-to-Octet-String encoding
       };
       "serde_derive" = rec {
         crateName = "serde_derive";
-        version = "1.0.227";
+        version = "1.0.228";
         edition = "2021";
         description = "Macros 1.1 implementation of #[derive(Serialize, Deserialize)]";
-        sha256 = "016y5ryfv99z7a1khyrmiws5zq6lc07xyaiqkc7cy9487f999rji";
+        sha256 = "0y8xm7fvmr2kjcd029g9fijpndh8csv5m20g4bd76w8qschg4h6m";
         procMacro = true;
         authors = [
           "Erick Tryzelaar <erick.tryzelaar@gmail.com>"
@@ -19298,7 +19298,7 @@ Unicode Standard Annex #31.
       };
       "valence-coprocessor-domain-prover" = rec {
         crateName = "valence-coprocessor-domain-prover";
-        version = "0.5.0";
+        version = "0.5.1";
         edition = "2021";
         description = "The Valence co-processor circuit definition.";
         src = lib.cleanSourceWith { filter = sourceFilter;  src = ./crates/core; };
@@ -19356,7 +19356,7 @@ Unicode Standard Annex #31.
       };
       "valence-coprocessor-domain-prover-builder" = rec {
         crateName = "valence-coprocessor-domain-prover-builder";
-        version = "0.5.0";
+        version = "0.5.1";
         edition = "2021";
         description = "The Valence co-processor domain definition.";
         crateBin = [
@@ -19498,7 +19498,7 @@ Unicode Standard Annex #31.
       };
       "valence-coprocessor-domain-prover-controller" = rec {
         crateName = "valence-coprocessor-domain-prover-controller";
-        version = "0.5.0";
+        version = "0.5.1";
         edition = "2021";
         description = "The Valence co-processor circuit definition.";
         src = lib.cleanSourceWith { filter = sourceFilter;  src = ./crates/controller; };
@@ -19526,7 +19526,7 @@ Unicode Standard Annex #31.
       };
       "valence-coprocessor-domain-prover-service" = rec {
         crateName = "valence-coprocessor-domain-prover-service";
-        version = "0.5.0";
+        version = "0.5.1";
         edition = "2021";
         description = "The Valence co-processor circuit definition.";
         crateBin = [

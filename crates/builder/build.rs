@@ -34,7 +34,7 @@ fn main() {
         let id = DomainData::identifier_from_parts("ethereum-electra-alpha");
 
         // TODO fetch from repo or coprocessor
-        let vk = "0x0024f93469cf0354fbb33989ddd1a3c8b5d62b2e8bb6fa20a4bc5325269683c0";
+        let vk = "0x0082932cde368f673d28847cd0fc0d972bed28c12298463ce9c08b0c87671f12";
         let domains = serde_json::json!([{
             "id": id,
             "vk": vk,
