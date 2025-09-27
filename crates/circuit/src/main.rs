@@ -2,7 +2,7 @@
 
 use msgpacker::Unpackable as _;
 use sp1_zkvm::lib::verify::verify_sp1_proof;
-use valence_coprocessor::{Hash, Hasher as _};
+use valence_coprocessor::Hasher as _;
 use valence_coprocessor_domain_prover::{Circuit, CircuitInput};
 use valence_coprocessor_sp1::Sp1Hasher;
 use zerocopy::FromBytes;
@@ -14,7 +14,12 @@ pub fn main() {
     let input = CircuitInput::unpack(&input).unwrap().1;
 
     if input.updates.is_empty() {
-        let output = [&Hash::default()[..], input.vk.as_slice()].concat();
+        let initial_root = [
+            0x22, 0xfc, 0x64, 0x5f, 0xa0, 0x5c, 0x14, 0x0a, 0x7b, 0x33, 0x34, 0x5c, 0x1f, 0xf6,
+            0xde, 0xb3, 0xf8, 0x1a, 0xfb, 0xb5, 0x75, 0x55, 0x44, 0x66, 0x61, 0xe4, 0xec, 0x74,
+            0x09, 0x9f, 0xe0, 0xe4,
+        ];
+        let output = [&initial_root, input.vk.as_slice()].concat();
         sp1_zkvm::io::commit_slice(&output);
         return;
     }
